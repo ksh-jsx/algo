@@ -1,3 +1,5 @@
+/*https://programmers.co.kr/learn/courses/30/lessons/67256 */
+
 const left_arr=[1,4,7]
 const right_arr=[3,6,9]
 let position={lh:10,rh:12}
