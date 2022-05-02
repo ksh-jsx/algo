@@ -36,8 +36,7 @@ function solution(relation) {
   
   const colNum = relation[0].length;
   
-  let indexes = new Array(colNum).fill(0).map((_, i) => i);
-  
+  let indexes = new Array(colNum).fill(0).map((_, i) => i);  
   
   // column들의 조합
   let colCom = [];    
