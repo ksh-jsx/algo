@@ -1,3 +1,4 @@
+/*https://programmers.co.kr/learn/courses/30/lessons/62048*/
 function gcd(w, h) {   
 
   const mod = w % h
