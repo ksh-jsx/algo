@@ -83,31 +83,22 @@ class LinkedListQueue {
   getSize() {
     return this.size;
   }
-
-  getMaxValue() {
-    let max = this.head.value;
-    let target = this.head;
-    while (target.next) {
-      target = target.next;
-      if (target.value > max) max = target.value;
-    }
-    return max;
-  }
 }
 
 const solution = (priorities, location) => {
-  let answer = 1;
+  let cnt = 0;
   const queue = new LinkedListQueue();
   priorities.map((x, i) => queue.enqueue(x, i));
+  priorities.sort((a, b) => b - a);
 
   while (queue.getSize()) {
-    const max = queue.getMaxValue();
+    const max = priorities[cnt];
     const target = queue.dequeue();
-    console.log(target[0], target[1], max);
+
     if (max > target[0]) queue.enqueue(target[0], target[1]);
     else {
-      if (location === target[1]) return answer;
-      else answer++;
+      cnt++;
+      if (location === target[1]) return cnt;
     }
   }
 };
