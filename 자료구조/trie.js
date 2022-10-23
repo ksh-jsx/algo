@@ -12,7 +12,8 @@ class Trie {
 
   insert(string) {
     let currentNode = this.root;
-    for (const char of string) {
+    for (const char of string + ".") {
+      //같은 철자를 포함한 문자가 추가될 경우 구분을 위해 "." 추가
       if (!currentNode.children.has(char)) {
         currentNode.children.set(char, new Node(currentNode.value + char));
       }
@@ -20,34 +21,30 @@ class Trie {
     }
   }
 
-  has(string) {
+  search(keyword) {
     let currentNode = this.root;
+    const values = []; //검색된 값들
+    const queue = []; // 검색 대상
 
-    for (const char of string) {
-      if (!currentNode.children.has(char)) {
-        return false;
+    for (const char of keyword) {
+      //검색어 마지막글자가 보관된 node까지 이동
+      if (currentNode.children.has(char))
+        currentNode = currentNode.children.get(char);
+      else {
+        console.log("결과 없음");
+        return;
       }
-      currentNode = currentNode.children.get(char);
     }
-    return true;
-  }
 
-  search(string) {
-    let currentNode = this.root;
-    const values = [];
-    const queue = [];
-    for (const char of string) {
-      currentNode = currentNode.children.get(char);
-    }
-    values.push(currentNode.value);
     queue.push(...currentNode.children);
+
     while (queue.length) {
       const { value, children } = queue.shift()[1];
-      //console.log(children);
-      values.push(value);
+      if (children.size === 0) values.push(value.slice(0, -1)); //마지막 "." 제거
       queue.push(...children);
     }
-    console.log(`${string}의 검색결과: ${values}`);
+    console.log(`${keyword} 검색결과: ${values}`);
+    return;
   }
 }
 
@@ -60,3 +57,4 @@ trie.insert("cake");
 
 trie.search("ca");
 trie.search("cat");
+trie.search("cd");
